@@ -5,7 +5,7 @@ class Home extends Component {
   state = {};
   render() {
     return (
-      <div>Home</div>
+      <div><button className="btn btn-primary">Click Me!</button></div>
     );
   }
 
