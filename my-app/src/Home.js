@@ -3,6 +3,7 @@ import './App.css';
 import classicTee from './images/classic-tee.jpg';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 class Home extends Component {
   state = {
@@ -19,14 +20,33 @@ class Home extends Component {
       cart: []
     };
   render() {
+    const cartItems = this.state.cart.map((item, index) => {
+        return (
+            <table key={index}>
+                <tbody>
+                <tr>
+                    <td className="itemsTd"><img className="cartItemImage" src={classicTee} alt='Classic Tee'/></td>
+                    <td className="itemsTd"> 
+                        <li>{item[0]}</li>
+                        <li>{item[1]}</li>
+                        <li>{`Size: ${item[3]}`}</li>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        );
+      });
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-light ml-auto">
                 <span/>
                 <div className="navbar-text justify-content-end ml-auto">
-                    <li  className="navbar-nav ml-auto" onClick={this.shoppingCart}>My Cart ({this.state.numOfItems})</li>
+                    <DropdownButton alignRight id="dropdown-basic-button" title={`My Cart (${this.state.numOfItems})`}>
+                      <div>{cartItems}</div>
+                    </DropdownButton>
                 </div>
             </nav>
+            <div></div>
             <div className="container">
                 <div id="main">
                     <div className="container">
@@ -40,29 +60,29 @@ class Home extends Component {
                                 <strong className="itemPrice">{this.state.item1.price}</strong>
                                 <hr/>
                                 <p className="itemDescription">{this.state.item1.description}</p>
-                               <p className="sizeLabel">SIZE<span className="star">*</span></p>
+                               <p className="sizeLabel">SIZE<span className="star">*</span><span className="selectedButtonLabel">{` ${this.state.selectedButton}`}</span></p>
                                 <p>
-                                    <button onClick={this.selectSize} id="s" className={this.state.small}>S</button>
-                                    <button onClick={this.selectSize} id="m" className={this.state.medium}>M</button>
-                                    <button onClick={this.selectSize} id="l" className={this.state.large}>L</button>
+                                    <button onClick={this.selectSize} id="S" className={this.state.small}>S</button>
+                                    <button onClick={this.selectSize} id="M" className={this.state.medium}>M</button>
+                                    <button onClick={this.selectSize} id="L" className={this.state.large}>L</button>
                                 </p>
-                                <button onClick={this.addToCart} className="btn btn-secondary">ADD TO CART</button>
+                                <button onClick={this.addToCart} className="btn btn-outline-dark">ADD TO CART</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-      <Modal show={this.state.show} onHide={this.handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>{this.state.modalHeading}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{this.state.modalBody}</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={this.handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
+            <Modal show={this.state.show} onHide={this.handleClose}>
+                <Modal.Header closeButton>
+                <Modal.Title>{this.state.modalHeading}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{this.state.modalBody}</Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={this.handleClose}>
+                    Close
+                </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
   }
@@ -81,29 +101,32 @@ class Home extends Component {
         this.setState({ modalHeading: "Success!", modalBody: "Item has been added" });
         this.handleShow();
         this.setState({ small: 'btn btn-light',  medium: 'btn btn-light', large: 'btn btn-light'});
+        this.setState({ selectedButton: ''});
+        let a = this.state.numOfItems;
+        a++;
+        this.setState({numOfItems: a});
+  
+        let b = this.state.cart;
+        let c = [this.state.item1.title, this.state.item1.price, this.state.item1.image, this.state.selectedButton];
+        b.push(c);
+        this.setState({cart: b});
     }
 }
-  shoppingCart = () => {
-      console.log('Hello');
-      let a = this.state.numOfItems;
-      a++;
-      this.setState({numOfItems: a});
-  }
   selectSize = (event) => {
     switch(event.target.id) {
-        case 's':
+        case 'S':
             if (this.state.small === 'btn btn-light active') {
                 this.setState({ small: 'btn btn-light', selectedButton: '' });
                 this.setState({ medium: 'btn btn-light' });
                 this.setState({ large: 'btn btn-light' });
             }
             else {
-                this.setState({ small: 'btn btn-light active', selectedButton: 's' });
+                this.setState({ small: 'btn btn-light active', selectedButton: 'S' });
                 this.setState({ medium: 'btn btn-light' });
                 this.setState({ large: 'btn btn-light' });
             }
           break;
-        case 'm':
+        case 'M':
             if (this.state.medium === 'btn btn-light active') {
                 this.setState({ small: 'btn btn-light'});
                 this.setState({ medium: 'btn btn-light' });
@@ -111,11 +134,11 @@ class Home extends Component {
             }
             else {
                 this.setState({ small: 'btn btn-light' });
-                this.setState({ medium: 'btn btn-light active', selectedButton: 'm' });
+                this.setState({ medium: 'btn btn-light active', selectedButton: 'M' });
                 this.setState({ large: 'btn btn-light' });
             }
             break;
-        case 'l':
+        case 'L':
             if (this.state.large === 'btn btn-light active') {
                 this.setState({ small: 'btn btn-light' });
                 this.setState({ medium: 'btn btn-light' });
@@ -124,14 +147,11 @@ class Home extends Component {
             else {
                 this.setState({ small: 'btn btn-light' });
                 this.setState({ medium: 'btn btn-light' });
-                this.setState({ large: 'btn btn-light active', selectedButton: 'l' });
+                this.setState({ large: 'btn btn-light active', selectedButton: 'L' });
             }
             break;
         default:
       }
   }
-
-
 }
-
 export default Home;

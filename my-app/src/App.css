@@ -7,6 +7,36 @@ body {
   margin: 0 0;
   width: 100%;
 }
+#cartButton{
+  background-color: transparent;
+  color: black;
+  border: 0px solid transparent;
+}
+.itemsTd {
+  padding-right: 70px;
+  padding-top: 10px;
+}
+#cartDiv {
+  width: 500px;
+}
+.cartItemHeader {
+  padding: 5px;
+}
+.selectedButtonLabel {
+  color: black;
+}
+#dropdown-basic-button {
+  background-color: transparent;
+  color: #888888;
+  border: 0px solid transparent;
+}
+.cartItemImage {
+  width: 80px;
+}
+.cartItem {
+  padding: 10px;
+
+}
 #cartHeader {
   float: right;
 } 
