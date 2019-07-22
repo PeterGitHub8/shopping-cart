@@ -1,1 +1,1 @@
-# shopping-cart
+# Basic design for a shopping cart.
