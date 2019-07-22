@@ -8,7 +8,7 @@ body {
   width: 100%;
 }
 #cartHeader {
-  cursor: pointer;
+  float: right;
 } 
 .container {
   margin: 40px 0;
@@ -17,6 +17,7 @@ body {
   height: auto;
 }
 .itemTitle {
+  font-size: 1.2em;
   margin: 10px 0;
 }
 .itemImages {
@@ -24,4 +25,25 @@ body {
 }
 .btn-light {
   margin: 0 2px;
+}
+.itemDescription {
+  font-size: 0.8em;
+  color: #888888;
+}
+.itemPrice {
+  font-size: 1em;
+}
+.sizeLabel {
+  color: #888888;
+  font-size: 0.7em;
+  font-weight: bold;
+}
+.star {
+  color: #C90000;
+}
+.btn-light {
+  background-color: white;
+}
+.navbar-nav {
+  float: right;
 }
